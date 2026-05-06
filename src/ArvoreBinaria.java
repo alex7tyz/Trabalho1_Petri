@@ -6,32 +6,65 @@ public class ArvoreBinaria {
         System.out.println("Árvore Binária criada com sucesso!");
     }
 
+//    public void inserir(Integer conteudo) {
+//        No novoNo = new No(conteudo);
+//
+//        if(estaVazia()) {
+//            this.raiz = novoNo;
+//        } else {
+//            No aux = this.raiz;
+//            while(true) {
+//                if (aux.getConteudo() > novoNo.getConteudo()) {
+//                    if (aux.getEsquerda() == null) {
+//                        aux.setEsquerda(novoNo);
+//                        return;
+//                    } else {
+//                        aux = aux.getEsquerda();
+//                    }
+//                } else if (aux.getConteudo() == novoNo.getConteudo()) {
+//                    System.out.println("Não é possível informar nós repetidos.");
+//                    return;
+//                } else {
+//                    if (aux.getDireita() == null) {
+//                        aux.setDireita(novoNo);
+//                        return;
+//                    } else {
+//                        aux = aux.getDireita();
+//                    }
+//                }
+//            }
+//        }
+//    }
+
     public void inserir(Integer conteudo) {
         No novoNo = new No(conteudo);
 
         if(estaVazia()) {
             this.raiz = novoNo;
         } else {
-            No aux = this.raiz;
-            while(true) {
-                if (aux.getConteudo() > novoNo.getConteudo()) {
-                    if (aux.getEsquerda() == null) {
-                        aux.setEsquerda(novoNo);
-                        return;
-                    } else {
-                        aux = aux.getEsquerda();
-                    }
-                } else if (aux.getConteudo() == novoNo.getConteudo()) {
-                    System.out.println("Não é possível informar nós repetidos.");
-                    return;
-                } else {
-                    if (aux.getDireita() == null) {
-                        aux.setDireita(novoNo);
-                        return;
-                    } else {
-                        aux = aux.getDireita();
-                    }
-                }
+            inserirRecursivo(novoNo, this.raiz);
+        }
+    }
+
+    public void inserirRecursivo(No novoNo, No atual) {
+        if (atual.getConteudo() > novoNo.getConteudo()) {
+            if (atual.getEsquerda() == null) {
+                atual.setEsquerda(novoNo);
+                System.out.println("O nó " + novoNo.getConteudo() + " foi inserido na Árvore.");
+                return;
+            } else {
+                inserirRecursivo(novoNo, atual.getEsquerda());
+            }
+        } else if (atual.getConteudo() == novoNo.getConteudo()) {
+            System.out.println("Não é possível informar nós repetidos.");
+            return;
+        } else {
+            if (atual.getDireita() == null) {
+                atual.setDireita(novoNo);
+                System.out.println("O nó " + novoNo.getConteudo() + " foi inserido na Árvore.");
+                return;
+            } else {
+                inserirRecursivo(novoNo, atual.getDireita());
             }
         }
     }
