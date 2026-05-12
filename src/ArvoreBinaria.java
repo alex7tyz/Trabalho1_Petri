@@ -117,6 +117,55 @@ public class ArvoreBinaria {
                 break;
         }
     }
+    // remoção
+    public void remover(Integer conteudo) {
+        this.raiz = removerRecursivo(this.raiz, conteudo);
+    }
+    private No removerRecursivo(No atual, Integer conteudo) {
+        if (atual == null) {
+            System.out.println("Nó não encontrado.");
+            return null;
+        }
+        if (conteudo < atual.getConteudo()) {
+            atual.setEsquerda(
+                    removerRecursivo(atual.getEsquerda(), conteudo)
+            );
+        } else if (conteudo > atual.getConteudo()) {
+            atual.setDireita(
+                    removerRecursivo(atual.getDireita(), conteudo)
+            );
+        } else {
+            System.out.println("Removendo nó: " + atual.getConteudo());
 
-
+            // Nó folha
+            if (atual.getEsquerda() == null &&
+                    atual.getDireita() == null) {
+                return null;
+            }
+            // filho direito
+            if (atual.getEsquerda() == null) {
+                return atual.getDireita();
+            }
+            // filho esquerdo
+            if (atual.getDireita() == null) {
+                return atual.getEsquerda();
+            }
+            // Dois filhos
+            No sucessor = menorDosMaiores(atual.getDireita());
+            atual.setConteudo(sucessor.getConteudo());
+            atual.setDireita(
+                    removerRecursivo(
+                            atual.getDireita(),
+                            sucessor.getConteudo()
+                    )
+            );
+        }
+        return atual;
+    }
+    private No menorDosMaiores(No atual) {
+        while (atual.getEsquerda() != null) {
+            atual = atual.getEsquerda();
+        }
+        return atual;
+    }
 }
